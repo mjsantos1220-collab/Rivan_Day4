@@ -1,5 +1,5 @@
 
-<!-- Your monitor number = #$34T# -->
+<!-- Your monitor number = 22 -->
 
 
 ## ⛅ Warm Up for Day 4.
@@ -15,12 +15,12 @@ Verify:
 
 ~~~cmd
 @cmd
-ping 10.#$34T#.1.10             PC Network Adapter
-ping 10.#$34T#.1.2		    CoreTAAS
-ping 10.#$34T#.1.4		    CoreBABA
-ping 10.#$34T#.100.8		CUCM
-ping 10.#$34T#.#$34T#.1		EDGE - INSIDE
-ping 200.0.0.#$34T#		    EDGE - OUTSIDE
+ping 10.22.1.10             PC Network Adapter
+ping 10.22.1.2		    CoreTAAS
+ping 10.22.1.4		    CoreBABA
+ping 10.22.100.8		CUCM
+ping 10.22.22.1		EDGE - INSIDE
+ping 200.0.0.22		    EDGE - OUTSIDE
 
 ping 200.0.0.k		        Klassmate's EDGE	       k = klassmate's Monitor Number
 ping 10.k.100.8		        Klassmate's CUCM
@@ -34,8 +34,8 @@ Your Branch must be able to call other klassmates
 <br>
 
 View your cameras:
-  - http://10.#$34T#.50.6  
-  - http://10.#$34T#.50.8  
+  - http://10.22.50.6  
+  - http://10.22.50.8  
 
 <br>
 <br>
@@ -78,7 +78,7 @@ Segments
 Three way handshake  
 Sliding Window  
   
-Commands: nmap -v 10.#$34T#.1.10    
+Commands: nmap -v 10.22.1.10    
   
 Well-known ports 0 - 1023  
 Registered ports 1024 - 49151  
@@ -124,7 +124,7 @@ conf t
  ip routing
  int fa0/9
   no switchport
-  ip add 10.#$34T#.69.69 255.255.255.248
+  ip add 10.22.69.69 255.255.255.248
   no shut
   end
 ~~~
@@ -137,7 +137,7 @@ conf t
  ip routing
  int fa0/9
   no switchport
-  ip add 10.#$34T#.69.73 255.255.255.248
+  ip add 10.22.69.73 255.255.255.248
   no shut
   end
 ~~~
@@ -147,7 +147,7 @@ conf t
 Will they ping?
 ~~~
 !@CoreTAAS
-ping 10.#$34T#.69.73
+ping 10.22.69.73
 ~~~
 
 &nbsp;
@@ -252,7 +252,7 @@ To CoreBABA:VLAN 10
 ~~~
 !@EDGE
 conf t
- ip route 10.#$34T#.10.4 255.255.255.255 10.#$34T#.#$34T#.4
+ ip route 10.22.10.4 255.255.255.255 10.22.22.4
  end
 ~~~
 
@@ -262,7 +262,7 @@ To CoreBABA:VLAN 100
 ~~~
 !@EDGE
 conf t
- ip route 10.#$34T#.100.4  255.255.255.255  ___.___.___.___
+ ip route 10.22.100.4  255.255.255.255  ___.___.___.___
  end
 ~~~
 
@@ -272,7 +272,7 @@ To CUCM
 ~~~
 !@EDGE
 conf t
- ip route 10.#$34T#.100.___  255.255.255.255 ___.___.___.___
+ ip route 10.22.100.___  255.255.255.255 ___.___.___.___
  end
 ~~~
 
@@ -331,7 +331,7 @@ From CUCM to EDGE
 ~~~
 !@CUCM
 conf t
- ip route 10.#$34T#.#$34T#.1  255.255.255.255 10.#$34T#.100.4
+ ip route 10.22.22.1  255.255.255.255 10.22.100.4
  end
 ~~~
 
@@ -377,7 +377,7 @@ conf t
 ~~~
 !@EDGE
 conf t
- ip route 10.#$34T#.0.0  255.255.0.0  10.#$34T#.#$34T#.4
+ ip route 10.22.0.0  255.255.0.0  10.22.22.4
 ~~~
 
 <br>
@@ -385,8 +385,8 @@ conf t
 Static route on windows
 ~~~
 !@cmd
-route add 10.0.0.0 mask 255.0.0.0 10.#$34T#.1.4 -p
-route add 200.0.0.0 mask 255.255.255.0 10.#$34T#.1.4 -p
+route add 10.0.0.0 mask 255.0.0.0 10.22.1.4 -p
+route add 200.0.0.0 mask 255.255.255.0 10.22.1.4 -p
 ~~~
 
 <br>
@@ -396,14 +396,14 @@ route add 200.0.0.0 mask 255.255.255.0 10.#$34T#.1.4 -p
 &nbsp;
 
 ### Exercise 01: Establish connectivity between the loopback 1 IP of EDGE and the loopback 25 IP of CoreTAAS
-- EDGE loop1 (#$34T#.0.0.1/32)
-- CoreTAAS loop25 (10.#$34T#.25.25/32)
+- EDGE loop1 (22.0.0.1/32)
+- CoreTAAS loop25 (10.22.25.25/32)
 ~~~
 !@CoreTAAS
 conf t
  ip routing
  int loopback 25
-  ip add 10.#$34T#.25.25 255.255.255.255
+  ip add 10.22.25.25 255.255.255.255
   end
 ~~~
 
@@ -414,7 +414,7 @@ conf t
 conf t
  ip routing
  int loopback 1
-  ip add #$34T#.0.0.1 255.255.255.255
+  ip add 22.0.0.1 255.255.255.255
   end
 ~~~
 
@@ -424,14 +424,14 @@ conf t
 Verify - Make sure both CoreTAAS & EDGE can ping each other's loopback interface.
 ~~~
 !@CoreTAAS
-ping #$34T#.0.0.1
+ping 22.0.0.1
 ~~~
 
 <br>
 
 ~~~
 !@EDGE
-ping 10.#$34T#.25.25
+ping 10.22.25.25
 ~~~
 
 <br>
@@ -483,7 +483,7 @@ ping 10.#$34T#.25.25
 ~~~
 !@CoreTAAS
 conf t
- ip route #$34T#.0.0.1 255.255.255.255 10.#$34T#.1.4
+ ip route 22.0.0.1 255.255.255.255 10.22.1.4
  end
 ~~~
 
@@ -492,7 +492,7 @@ conf t
 ~~~
 !@EDGE
 conf t
- ip route 10.#$34T#.25.25 255.255.255.255 10.#$34T#.#$34T#.4
+ ip route 10.22.25.25 255.255.255.255 10.22.22.4
  end
 ~~~
 
@@ -502,8 +502,8 @@ Every device on path must know how to reach both destinations.
 ~~~
 !@CoreBABA
 conf t
- ip route 10.#$34T#.25.25 255.255.255.255 10.#$34T#.1.2
- ip route #$34T#.0.0.1 255.255.255.255 10.#$34T#.#$34T#.1
+ ip route 10.22.25.25 255.255.255.255 10.22.1.2
+ ip route 22.0.0.1 255.255.255.255 10.22.22.1
  end
 ~~~
 
@@ -514,7 +514,7 @@ Allow EDGE & CoreTAAS to ping directly:
 ~~~
 !@CoreTAAS
 conf t
- ip route 10.#$34T#.#$34T#.1 255.255.255.255 10.#$34T#.1.4
+ ip route 10.22.22.1 255.255.255.255 10.22.1.4
  end
 ~~~
 
@@ -523,7 +523,7 @@ conf t
 ~~~
 !@EDGE
 conf t
- ip route 10.#$34T#.1.2 255.255.255.255 10.#$34T#.#$34T#.4
+ ip route 10.22.1.2 255.255.255.255 10.22.22.4
  end
 ~~~
 
@@ -558,14 +558,14 @@ Steps in configuring EIGRP
 !@CoreBABA
 conf t
  int loopback 90
-  ip add 10.#$34T#.90.4 255.255.255.240
+  ip add 10.22.90.4 255.255.255.240
   exit
  router eigrp 100
-  network 10.#$34T#.90.0 0.0.0.15
-  network 10.#$34T#.1.0 0.0.0.255
-  network 10.#$34T#.10.0 0.0.0.255
-  network 10.#$34T#.50.0 0.0.0.255
-  network 10.#$34T#.100.0 0.0.0.255
+  network 10.22.90.0 0.0.0.15
+  network 10.22.1.0 0.0.0.255
+  network 10.22.10.0 0.0.0.255
+  network 10.22.50.0 0.0.0.255
+  network 10.22.100.0 0.0.0.255
   end
 ~~~
 
@@ -575,11 +575,11 @@ conf t
 !@CUCM
 conf t
  int loopback 90
-  ip add 10.#$34T#.90.90 255.255.255.240
+  ip add 10.22.90.90 255.255.255.240
   exit
  router eigrp 100
-  network 10.#$34T#.90.80 0.0.0.15
-  network 10.#$34T#.100.0 0.0.0.255
+  network 10.22.90.80 0.0.0.15
+  network 10.22.100.0 0.0.0.255
   end
 ~~~
 
@@ -670,9 +670,9 @@ What Routing protocol to use if __Multi-Vendor__? __OSPF__
 !@CoreBABA
 conf t
  router ospf 1
-  router-id 10.#$34T#.#$34T#.4
-  network 10.#$34T#.1.0 0.0.0.255 area 0
-  network 10.#$34T#.#$34T#.0 0.0.0.255 area 0
+  router-id 10.22.22.4
+  network 10.22.1.0 0.0.0.255 area 0
+  network 10.22.22.0 0.0.0.255 area 0
   end
 ~~~
 
@@ -682,10 +682,10 @@ conf t
 !@EDGE
 conf t
  router ospf 1
-  router-id #$34T#.0.0.1
-  network 10.#$34T#.#$34T#.0 0.0.0.255 area 0
+  router-id 22.0.0.1
+  network 10.22.22.0 0.0.0.255 area 0
   network 200.0.0.0 0.0.0.255 area 0
-  network #$34T#.0.0.1 0.0.0.0 area 0
+  network 22.0.0.1 0.0.0.0 area 0
   end
 ~~~
 
@@ -780,8 +780,8 @@ Summary LSA
 !@EDGE
 conf t
  int loopback 110
-  ip add 10.#$34T#.110.110 255.255.255.255
-  ip ospf 1 area #$34T#
+  ip add 10.22.110.110 255.255.255.255
+  ip ospf 1 area 22
   end
 clear ip ospf process
 yes
@@ -821,7 +821,7 @@ show ip ospf neighbor
 Will the ping:
 ~~~
 !@CUCM
-ping 200.0.0.#$34T#
+ping 200.0.0.22
 ~~~
 
 <br>
@@ -871,38 +871,38 @@ end
 conf t
  int gi 0/0/0
   no shut
-  ip add 10.#$34T#.#$34T#.1 255.255.255.0
+  ip add 10.22.22.1 255.255.255.0
   ip nat inside
   desc INSIDE
  int gi 0/0/1
   no shut
-  ip add 200.0.0.#$34T# 255.255.255.0
+  ip add 200.0.0.22 255.255.255.0
   ip nat outside
   desc OUTSIDE
  int loopback 0
-  ip add #$34T#.0.0.1 255.255.255.255
+  ip add 22.0.0.1 255.255.255.255
   desc VIRTUALIP
  !
  ip access-list extended NAT-POLICY
-  deny ip 10.#$34T#.0.0 0.0.255.255 10.11.0.0 0.0.255.255
-  deny ip 10.#$34T#.0.0 0.0.255.255 10.12.0.0 0.0.255.255
-  deny ip 10.#$34T#.0.0 0.0.255.255 10.21.0.0 0.0.255.255
-  deny ip 10.#$34T#.0.0 0.0.255.255 10.22.0.0 0.0.255.255
-  deny ip 10.#$34T#.0.0 0.0.255.255 10.31.0.0 0.0.255.255
-  deny ip 10.#$34T#.0.0 0.0.255.255 10.32.0.0 0.0.255.255
-  deny ip 10.#$34T#.0.0 0.0.255.255 10.41.0.0 0.0.255.255
-  deny ip 10.#$34T#.0.0 0.0.255.255 10.42.0.0 0.0.255.255
-  deny ip 10.#$34T#.0.0 0.0.255.255 10.51.0.0 0.0.255.255
-  deny ip 10.#$34T#.0.0 0.0.255.255 10.52.0.0 0.0.255.255
-  deny ip 10.#$34T#.0.0 0.0.255.255 10.61.0.0 0.0.255.255
-  deny ip 10.#$34T#.0.0 0.0.255.255 10.62.0.0 0.0.255.255
-  deny ip 10.#$34T#.0.0 0.0.255.255 10.71.0.0 0.0.255.255
-  deny ip 10.#$34T#.0.0 0.0.255.255 10.72.0.0 0.0.255.255
-  deny ip 10.#$34T#.0.0 0.0.255.255 10.81.0.0 0.0.255.255
-  deny ip 10.#$34T#.0.0 0.0.255.255 10.82.0.0 0.0.255.255
-  deny ip 10.#$34T#.0.0 0.0.255.255 10.91.0.0 0.0.255.255
-  deny ip 10.#$34T#.0.0 0.0.255.255 10.92.0.0 0.0.255.255
-  no deny ip 10.#$34T#.0.0 0.0.255.255 10.#$34T#.0.0 0.0.255.255
+  deny ip 10.22.0.0 0.0.255.255 10.11.0.0 0.0.255.255
+  deny ip 10.22.0.0 0.0.255.255 10.12.0.0 0.0.255.255
+  deny ip 10.22.0.0 0.0.255.255 10.21.0.0 0.0.255.255
+  deny ip 10.22.0.0 0.0.255.255 10.22.0.0 0.0.255.255
+  deny ip 10.22.0.0 0.0.255.255 10.31.0.0 0.0.255.255
+  deny ip 10.22.0.0 0.0.255.255 10.32.0.0 0.0.255.255
+  deny ip 10.22.0.0 0.0.255.255 10.41.0.0 0.0.255.255
+  deny ip 10.22.0.0 0.0.255.255 10.42.0.0 0.0.255.255
+  deny ip 10.22.0.0 0.0.255.255 10.51.0.0 0.0.255.255
+  deny ip 10.22.0.0 0.0.255.255 10.52.0.0 0.0.255.255
+  deny ip 10.22.0.0 0.0.255.255 10.61.0.0 0.0.255.255
+  deny ip 10.22.0.0 0.0.255.255 10.62.0.0 0.0.255.255
+  deny ip 10.22.0.0 0.0.255.255 10.71.0.0 0.0.255.255
+  deny ip 10.22.0.0 0.0.255.255 10.72.0.0 0.0.255.255
+  deny ip 10.22.0.0 0.0.255.255 10.81.0.0 0.0.255.255
+  deny ip 10.22.0.0 0.0.255.255 10.82.0.0 0.0.255.255
+  deny ip 10.22.0.0 0.0.255.255 10.91.0.0 0.0.255.255
+  deny ip 10.22.0.0 0.0.255.255 10.92.0.0 0.0.255.255
+  no deny ip 10.22.0.0 0.0.255.255 10.22.0.0 0.0.255.255
   permit ip any any
   exit
  !
@@ -910,8 +910,8 @@ conf t
  ip route 0.0.0.0 0.0.0.0 200.0.0.1
  !
  router ospf 1
-  router-id #$34T#.0.0.1
-  network 10.#$34T#.#$34T#.0 0.0.0.255 area 0
+  router-id 22.0.0.1
+  network 10.22.22.0 0.0.0.255 area 0
   !
   no network 200.0.0.0 0.0.0.255 area 0
   default-information originate always
@@ -932,7 +932,7 @@ ping google.com
 !@EDGE
 conf t
  int tun1
-  ip add 172.16.1.#$34T# 255.255.255.0
+  ip add 172.16.1.22 255.255.255.0
   tunnel source g0/0/1
   tunnel mode gre multipoint
   no shut
@@ -958,7 +958,7 @@ conf t
   ip nhrp map 172.16.1.82 200.0.0.82
   ip nhrp map 172.16.1.91 200.0.0.91
   ip nhrp map 172.16.1.92 200.0.0.92
-  no ip nhrp map 172.16.1.#$34T# 200.0.0.#$34T#
+  no ip nhrp map 172.16.1.22 200.0.0.22
   exit
  ip route 10.11.0.0 255.255.0.0 172.16.1.11 252
  ip route 10.12.0.0 255.255.0.0 172.16.1.12 252
@@ -979,7 +979,7 @@ conf t
  ip route 10.91.0.0 255.255.0.0 172.16.1.91 252
  ip route 10.92.0.0 255.255.0.0 172.16.1.92 252
  !
- no ip route 10.#$34T#.0.0 255.255.0.0 172.16.1.#$34T# 252
+ no ip route 10.22.0.0 255.255.0.0 172.16.1.22 252
  end
 ~~~
 
@@ -1170,7 +1170,7 @@ ip -br link
 3. Modify Interface IP
 VMNet2:  192.168.102.6/24  
 VMNet3:  11.11.11.100/27  
-Bridged: 10.#$34T#.1.6/24  
+Bridged: 10.22.1.6/24  
 
 <br>
 
@@ -1178,7 +1178,7 @@ Bridged: 10.#$34T#.1.6/24
 !@NetOps-PH
 ifconfig ens192 192.168.102.6 netmask 255.255.255.0 up
 ifconfig ens224 11.11.11.100 netmask 255.255.255.224 up
-ifconfig ens256 10.#$34T#.1.6 netmask 255.255.255.0 up
+ifconfig ens256 10.22.1.6 netmask 255.255.255.0 up
 ~~~
 
 <br>
@@ -1255,7 +1255,7 @@ type ethernet \
 con-name BRIDGED \
 ifname ens256 \
 ipv4.method manual \
-ipv4.addresses 10.#$34T#.1.6/24 \
+ipv4.addresses 10.22.1.6/24 \
 autoconnect yes
 
 nmcli connection up BRIDGED
@@ -1266,8 +1266,8 @@ nmcli connection up BRIDGED
 4. Routing
 ~~~
 !@NetOps-PH
-ip route add 10.0.0.0/8 via 10.#$34T#.1.4 dev ens256
-ip route add 200.0.0.0/24 via 10.#$34T#.1.4 dev ens256
+ip route add 10.0.0.0/8 via 10.22.1.4 dev ens256
+ip route add 200.0.0.0/24 via 10.22.1.4 dev ens256
 ip route add 0.0.0.0/0 via 11.11.11.113 dev ens224
 ~~~
 
